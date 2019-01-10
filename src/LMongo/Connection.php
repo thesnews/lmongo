@@ -61,13 +61,14 @@ class Connection {
 		$this->config = $config;
 
 		$options = array_get($this->config, 'options', array());
+		$driverOptions = array_get($this->config, 'driverOptions', array());
 
-      	$this->connection = new \MongoClient($this->getDsn($config), $options);
+	      	$this->connection = new \MongoClient($this->getDsn($config), $options, $driverOptions);
+	
+      		//Select database
+	        $this->db = $this->connection->{$config['database']};
 
-      	//Select database
-        $this->db = $this->connection->{$config['database']};
-
-        return $this;
+        	return $this;
 	}
 
 	/**
